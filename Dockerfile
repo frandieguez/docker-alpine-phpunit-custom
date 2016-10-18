@@ -1,4 +1,4 @@
-# PHPUnit Docker Container.
+# PHPUnit Docker Container
 FROM alpine:edge
 MAINTAINER Fran Dieguez <fran.dieguez@mabishu.com>
 
@@ -46,3 +46,20 @@ RUN apk --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testin
       php5-zlib \
       unzip
 
+RUN ln -s /usr/bin/php5 /usr/bin/php
+
+WORKDIR /tmp
+
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
+  && php composer-setup.php --install-dir=/usr/bin --filename=composer \
+  && php -r "unlink('composer-setup.php');" \
+  && composer require "phpunit/phpunit:~5.5.0" --prefer-source --no-interaction \
+  && composer require "phpunit/php-invoker" --prefer-source --no-interaction \
+  && ln -s /tmp/vendor/bin/phpunit /usr/local/bin/phpunit \
+  && sed -i 's/nn and/nn, Julien Breux (Docker) and/g' /tmp/vendor/phpunit/phpunit/src/Runner/Version.php
+
+VOLUME ["/app"]
+WORKDIR /app
+
+ENTRYPOINT ["/usr/local/bin/phpunit"]
+CMD ["--help"]
