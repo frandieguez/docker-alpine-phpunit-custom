@@ -39,8 +39,6 @@ RUN apk --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testin
       php5-zlib \
       unzip
 
-RUN ln -s /usr/bin/php5 /usr/bin/php
-
 WORKDIR /tmp
 
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
