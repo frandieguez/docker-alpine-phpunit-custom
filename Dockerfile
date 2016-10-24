@@ -6,7 +6,7 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
     bash ca-certificates curl git gettext libmcrypt-dev libicu-dev \
     libxslt1-dev && apt-get clean
 
-RUN docker-php-ext-install gettext mcrypt intl xsl pcntl
+RUN docker-php-ext-install gettext mcrypt intl xsl pcntl bcmath
 RUN pecl install xdebug && docker-php-ext-enable xdebug
 RUN pecl install redis-2.2.8 && docker-php-ext-enable redis
 
