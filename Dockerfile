@@ -10,6 +10,10 @@ RUN docker-php-ext-install gettext mcrypt intl xsl pcntl
 RUN pecl install xdebug && docker-php-ext-enable xdebug
 RUN pecl install redis && docker-php-ext-enable redis
 
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
+    && php composer-setup.php --install-dir=/usr/bin --filename=composer \
+    && php -r "unlink('composer-setup.php');" \
+
 VOLUME ["/app"]
 WORKDIR /app
 
