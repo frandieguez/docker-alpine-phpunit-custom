@@ -1,5 +1,5 @@
 # PHPUnit Docker Container
-FROM php:7.1
+FROM php:7.2
 MAINTAINER Fran Dieguez <fran.dieguez@mabishu.com>
 
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
